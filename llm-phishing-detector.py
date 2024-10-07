@@ -1,12 +1,19 @@
 import torch
-from transformers import LlamaTokenizer, LlamaForCausalLM
+from transformers import BertTokenizer, BertForSequenceClassification
 
 # specify model path
-model_path = 'openlm-research/open_llama_3b'
+model_path = 'ealvaradob/bert-finetuned-phishing'
 
 # set device to execute query on
 cuda_available = torch.cuda.is_available()
 device = 'cuda' if cuda_available else 'cpu'
+
+# initialize tokenizer and model
+tokenizer = BertTokenizer.from_pretrained(model_path)
+model = BertForSequenceClassification.from_pretrained(model_path)
+
+# move model to gpu if it is available
+model.to(device)
 
 # print info about CUDA device
 print(f'CUDA device available: {cuda_available}')
@@ -14,26 +21,28 @@ print(f'CUDA devices available: {torch.cuda.device_count()} ')
 print(f'CUDA current device: {torch.cuda.current_device()}')
 print(f'CUDA current device name: {torch.cuda.get_device_name(torch.cuda.current_device())}')
 
-# initialize model
-tokenizer = LlamaTokenizer.from_pretrained(model_path, legacy=False)
-model = LlamaForCausalLM.from_pretrained(
-    model_path, torch_dtype=torch.float16
-)
+# get user input
+message = input('\nEnter potential phishing message:\n')
 
-# move model to device
-model.to(device)
+# tokenize the input
+tokenized_input = tokenizer(message, return_tensors='pt', truncation=True, padding=True).to(device)
 
-# get message from the user
-message = 'Click this link to win an Iphone'
+# dont caculate gradient for the output
+with torch.no_grad():
+    model_output = model(**tokenized_input)
 
-# create prompt
-prompt = f'Q: Is this message a phishing attempt: {message}\nA:'
-input_ids = tokenizer(prompt, return_tensors="pt").to(device).input_ids  # 'pt' - pytorch tensors
+# get raw scores from a model
+logits = model_output.logits
 
-# generate output
-generation_output = model.generate(
-    input_ids=input_ids, max_new_tokens=16, do_sample=True
-)
+# get distributed probability
+probabilities = torch.softmax(logits, dim=-1)  # tensor([normal_message_probability, phishing_message_probability])
 
-# print model output
-print(tokenizer.decode(generation_output[0], skip_special_tokens=True))
+# get the index of the maximum value element
+predicted_class = torch.argmax(probabilities, dim=-1).item()  # 0 -> normal message, 1 -> phishing
+
+# get probabilities from tensor
+[_not_phishing_probability, phishing_probability] = probabilities.tolist()[0]
+
+# print info about the message
+print(f'\nPredicted class: {'phishing' if predicted_class == 1 else 'normal message'}')
+print(f'Phishing probability: {phishing_probability * 100:.5f}%')
