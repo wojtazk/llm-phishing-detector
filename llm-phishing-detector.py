@@ -15,11 +15,14 @@ model = BertForSequenceClassification.from_pretrained(model_path)
 # move model to gpu if it is available
 model.to(device)
 
-# print info about CUDA device
-print(f'CUDA device available: {cuda_available}')
-print(f'CUDA devices available: {torch.cuda.device_count()} ')
-print(f'CUDA current device: {torch.cuda.current_device()}')
-print(f'CUDA current device name: {torch.cuda.get_device_name(torch.cuda.current_device())}')
+# print info about the device
+if cuda_available:
+    print(f'CUDA device available: {cuda_available}')
+    print(f'CUDA devices available: {torch.cuda.device_count()} ')
+    print(f'CUDA current device: {torch.cuda.current_device()}')
+    print(f'Running on: {torch.cuda.get_device_name(torch.cuda.current_device())}')
+else:
+    print(f'Running on CPU')
 
 # get user input
 message = input('\nEnter potential phishing message:\n')
