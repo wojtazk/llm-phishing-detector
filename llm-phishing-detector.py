@@ -15,7 +15,7 @@ print(f'CUDA current device: {torch.cuda.current_device()}')
 print(f'CUDA current device name: {torch.cuda.get_device_name(torch.cuda.current_device())}')
 
 # initialize model
-tokenizer = LlamaTokenizer.from_pretrained(model_path)
+tokenizer = LlamaTokenizer.from_pretrained(model_path, legacy=False)
 model = LlamaForCausalLM.from_pretrained(
     model_path, torch_dtype=torch.float16
 )
@@ -23,14 +23,17 @@ model = LlamaForCausalLM.from_pretrained(
 # move model to device
 model.to(device)
 
+# get message from the user
+message = 'Click this link to win an Iphone'
+
 # create prompt
-prompt = 'Q: What is Phishing?\nA:'
-input_ids = tokenizer(prompt, return_tensors="pt").to(device).input_ids
+prompt = f'Q: Is this message a phishing attempt: {message}\nA:'
+input_ids = tokenizer(prompt, return_tensors="pt").to(device).input_ids  # 'pt' - pytorch tensors
 
 # generate output
 generation_output = model.generate(
-    input_ids=input_ids, max_new_tokens=64
+    input_ids=input_ids, max_new_tokens=16, do_sample=True
 )
 
 # print model output
-print(tokenizer.decode(generation_output[0]))
+print(tokenizer.decode(generation_output[0], skip_special_tokens=True))
