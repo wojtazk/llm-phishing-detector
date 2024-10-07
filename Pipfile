@@ -8,7 +8,7 @@ torch = "2.4"
 transformers = "4.45"
 sentencepiece = "0.2"
 accelerate = "0.34"
-protobuf = "5.18"
+protobuf = "5.28"
 
 [dev-packages]
 
