@@ -1,3 +1,3 @@
 # LLM Phishing Detector
 
-model: https://huggingface.co/EleutherAI/pythia-1.4b
+model: [openlm-research/open_llama_3b](https://huggingface.co/openlm-research/open_llama_3b)
