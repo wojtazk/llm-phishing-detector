@@ -1,5 +1,8 @@
 # LLM Phishing Detector
-LLM model: [ealvaradob/bert-finetuned-phishing](https://huggingface.co/ealvaradob/bert-finetuned-phishing)
+
+## LLM Model
+model used: [ealvaradob/bert-finetuned-phishing](https://huggingface.co/ealvaradob/bert-finetuned-phishing)\
+model license: `Apache license 2.0`
 
 ## Running locally
 Install project requirements:
@@ -8,7 +11,7 @@ pip install -r ./requirements.txt
 ```
 Run the program:
 ```shell
-python llm-phishing-detector.py
+python llm_phishing_detector.py
 ```
 
 ## Running in Docker
