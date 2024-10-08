@@ -1,51 +1,41 @@
+from helpers import print_device_info, get_model_prediction, OutputColors
 import torch
 from transformers import BertTokenizer, BertForSequenceClassification
 
 # specify model path
-model_path = 'ealvaradob/bert-finetuned-phishing'
+MODEL_PATH = 'ealvaradob/bert-finetuned-phishing'
 
-# set device to execute query on
+# check for available cuda devices
 cuda_available = torch.cuda.is_available()
+# set device to use
 device = 'cuda' if cuda_available else 'cpu'
 
 # initialize tokenizer and model
-tokenizer = BertTokenizer.from_pretrained(model_path)
-model = BertForSequenceClassification.from_pretrained(model_path)
+tokenizer = BertTokenizer.from_pretrained(MODEL_PATH)
+model = BertForSequenceClassification.from_pretrained(MODEL_PATH)
 
 # move model to gpu if it is available
 model.to(device)
 
 # print info about the device
-if cuda_available:
-    print(f'CUDA device available: {cuda_available}')
-    print(f'CUDA devices available: {torch.cuda.device_count()} ')
-    print(f'CUDA current device: {torch.cuda.current_device()}')
-    print(f'Running on: {torch.cuda.get_device_name(torch.cuda.current_device())}')
-else:
-    print(f'Running on CPU')
+print_device_info(cuda_available)
 
 # get user input
-message = input('\nEnter potential phishing message:\n')
+message = input(f'\n{OutputColors.BLUE}Enter potential phishing message (One line only):\n{OutputColors.RESET}')
 
 # tokenize the input
 tokenized_input = tokenizer(message, return_tensors='pt', truncation=True, padding=True).to(device)
 
-# dont caculate gradient for the output
-with torch.no_grad():
+# get model output
+with torch.no_grad(): # don't calculate gradient for the output
     model_output = model(**tokenized_input)
 
-# get raw scores from a model
-logits = model_output.logits
-
-# get distributed probability
-probabilities = torch.softmax(logits, dim=-1)  # tensor([normal_message_probability, phishing_message_probability])
-
-# get the index of the maximum value element
-predicted_class = torch.argmax(probabilities, dim=-1).item()  # 0 -> normal message, 1 -> phishing
-
-# get probabilities from tensor
-[_not_phishing_probability, phishing_probability] = probabilities.tolist()[0]
+# get model prediction -> (label, phishing_probability)
+predicted_label, phishing_probability = get_model_prediction(model_output)
 
 # print info about the message
-print(f'\nPredicted class: {'phishing' if predicted_class == 1 else 'normal message'}')
-print(f'Phishing probability: {phishing_probability * 100:.5f}%')
+print(f'\nPrediction: '
+      f'{OutputColors.GREEN + 'normal message' if predicted_label == 0
+      else OutputColors.RED + 'phishing message'}{OutputColors.RESET}')
+print(f'Phishing probability: {OutputColors.RED if phishing_probability >= 0.5 else OutputColors.GREEN}'
+      f'{phishing_probability * 100:.5f}%{OutputColors.RESET}')
