@@ -14,6 +14,20 @@ Run the program:
 python llm_phishing_detector.py
 ```
 
+## Running locally with pipenv
+Get into pipenv environment:
+```shell
+pipenv shell
+```
+Install dependencies
+```shell
+pipenv install
+```
+Run the program:
+```shell
+python llm_phishing_detector.py
+```
+
 ## Evaluating the model
 > [!WARNING]
 > For evaluation to work properly you need to put `csv` files into `evaluation_data` directory.\
@@ -33,6 +47,9 @@ python model_evaluate.py
     >A. I. Champa, M. F. Rabbi, and M. F. Zibran, “Curated datasets and feature analysis for phishing email detection with machine learning,” in 3rd IEEE International Conference on Computing and Machine Intelligence (ICMI), 2024, pp. 1–7 (to appear).
 
 ## Running in Docker
+> [!NOTE]
+> Docker image is about 11GB (sry, dependencies)
+
 Build image:
 ```shell
 docker image build -t llm-phishing-detector:v1 .
