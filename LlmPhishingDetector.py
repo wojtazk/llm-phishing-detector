@@ -1,6 +1,7 @@
-from helpers import print_device_info, get_model_prediction, OutputColors
 import torch
 from transformers import BertTokenizer, BertForSequenceClassification
+from helpers import get_model_prediction
+
 
 class LlmPhishingDetector:
     # specify model path
@@ -19,7 +20,7 @@ class LlmPhishingDetector:
         # move model to gpu if it is available
         self.model.to(self.device)
 
-    def detect_phishing(self, message):
+    def detect_phishing(self, message) -> (int, float):
         # tokenize the input
         tokenized_input = self.tokenizer(message, return_tensors='pt', truncation=True, padding=True).to(self.device)
 
@@ -31,18 +32,3 @@ class LlmPhishingDetector:
         label, probability = get_model_prediction(model_output)
 
         return label, probability
-
-
-# print device info
-print_device_info(LlmPhishingDetector.cuda_available)
-# get user input
-user_input = input(f'\n{OutputColors.BLUE}Enter potential phishing message (One line only):\n{OutputColors.RESET}')
-# get model prediction
-predicted_label, predicted_phishing_probability = LlmPhishingDetector().detect_phishing(user_input)
-
-# print info about the message
-print(f'\nPrediction: '
-      f'{OutputColors.GREEN + 'normal message' if predicted_label == 0
-      else OutputColors.RED + 'phishing message'}{OutputColors.RESET}')
-print(f'Phishing probability: {OutputColors.RED if predicted_phishing_probability >= 0.5 else OutputColors.GREEN}'
-      f'{predicted_phishing_probability * 100:.5f}%{OutputColors.RESET}')
