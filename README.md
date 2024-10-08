@@ -15,12 +15,13 @@ python llm_phishing_detector.py
 ```
 
 ## Evaluating the model
+> [!WARNING]
+> For evaluation to work properly you need to put `csv` files into `evaluation_data` directory.\
+> `body` & `label` column headers should be present in `csv` files.
+
 ```shell
 python model_evaluate.py
 ```
-For evaluation to work properly you need to put `csv` files into `evaluation_data` directory.
-> [!WARN]
-> `body` & `label` column headers should be present in `csv` files, in order to work properly
 
 ### Data used for evaluation
 <!-- - Non-phishing emails - [Enron Email Dataset](https://www.cs.cmu.edu/~enron/)
