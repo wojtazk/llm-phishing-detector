@@ -1,3 +1,6 @@
+# evaluation data
+/evaluation_data/*.csv
+
 # idea
 .idea/
 
