@@ -1,10 +1,10 @@
-from helpers import print_device_info, OutputColors
+from helpers import OutputColors
 from LlmPhishingDetector import LlmPhishingDetector
 
 detector = LlmPhishingDetector()
 
 # print device info
-print_device_info(detector.cuda_available)
+detector.print_device_info()
 # get user input
 user_input = input(f'\n{OutputColors.BLUE}Enter potential phishing message (One line only):\n{OutputColors.RESET}')
 # get model prediction
