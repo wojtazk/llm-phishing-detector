@@ -4,6 +4,20 @@
 model used: [ealvaradob/bert-finetuned-phishing](https://huggingface.co/ealvaradob/bert-finetuned-phishing)\
 model license: `Apache license 2.0`
 
+## LlmPhishingDetector class usage example
+```python
+from LlmPhishingDetector import LlmPhishingDetector
+
+# initialize detector
+detector = LlmPhishingDetector()
+
+message = "Hello There!"
+
+# get label(0 - normal message, 1 - phishing) and phishing probability
+# label: int, phishing_probability: float
+label, phishing_probability = detector.detect_phishing(message)
+```
+
 ## Running locally
 Install project requirements:
 ```shell
@@ -45,6 +59,11 @@ python model_evaluate.py
     `license`: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
       
     >A. I. Champa, M. F. Rabbi, and M. F. Zibran, “Curated datasets and feature analysis for phishing email detection with machine learning,” in 3rd IEEE International Conference on Computing and Machine Intelligence (ICMI), 2024, pp. 1–7 (to appear).
+
+### Evaluation Score
+On `Phishing Email Curated Database` the model labeled `92.34%` messages correctly.\
+\
+![evaluation score screen shot](https://github.com/user-attachments/assets/e263503b-5cbf-4c1e-a643-acc69539b850)
 
 ## Running in Docker
 > [!NOTE]
