@@ -3,7 +3,6 @@ from transformers import BertTokenizer, BertForSequenceClassification
 from helpers import OutputColors
 
 
-
 class LlmPhishingDetector:
     # specify model path
     model_path = 'ealvaradob/bert-finetuned-phishing'
