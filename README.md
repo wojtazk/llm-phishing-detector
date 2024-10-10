@@ -63,7 +63,7 @@ python model_evaluate.py
 ### Evaluation Score
 On `Phishing Email Curated Database` the model labeled `92.34%` messages correctly.\
 \
-![evaluation score screen shot](https://github.com/user-attachments/assets/e263503b-5cbf-4c1e-a643-acc69539b850)
+![evaluation score screenshot](https://github.com/user-attachments/assets/e263503b-5cbf-4c1e-a643-acc69539b850)
 
 ## Running in Docker
 > [!NOTE]
