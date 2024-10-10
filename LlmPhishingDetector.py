@@ -45,7 +45,7 @@ class LlmPhishingDetector:
 
         # get distributed probability
         probabilities = torch.softmax(logits,
-                                      dim=-1)  # tensor([normal_message_probability, phishing_message_probability])
+                                      dim=-1)  # tensor([[normal_message_probability, phishing_message_probability]])
 
         # get the index of the maximum value element
         label = torch.argmax(probabilities, dim=-1).item()  # 0 -> normal message, 1 -> phishing
