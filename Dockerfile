@@ -16,4 +16,4 @@ model_path = 'ealvaradob/bert-finetuned-phishing';\
 BertTokenizer.from_pretrained(model_path);\
 BertForSequenceClassification.from_pretrained(model_path)"
 
-CMD ["python", "llm_phishing_detector.py"]
+CMD ["python", "phishing_detector.py"]
