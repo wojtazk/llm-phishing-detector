@@ -7,8 +7,9 @@ detector = LlmPhishingDetector()
 detector.print_device_info()
 
 # get user input
-inputs = [input(f'{OutputColors.BLUE}\nEnter potential phishing message (type <<EOF to end input):'
-                f'\n{OutputColors.RESET}')]
+inputs = [
+    input(f'{OutputColors.BLUE}\nEnter potential phishing message (type <<EOF to end input):\n{OutputColors.RESET}')
+]
 
 while True:
     line = input()
