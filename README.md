@@ -28,6 +28,11 @@ Run the program:
 ```shell
 python phishing_detector.py
 ```
+\
+Type the content to be checked for phishing.\
+Type `<<EOF` as the last line to signal the end of input.
+
+Get label and prediction from the model.
 
 ## Running locally with pipenv
 > [!WARNING]
