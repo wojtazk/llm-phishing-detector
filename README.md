@@ -5,8 +5,9 @@ model used: [ealvaradob/bert-finetuned-phishing](https://huggingface.co/ealvarad
 model license: `Apache license 2.0`
 
 ## LlmPhishingDetector class usage example
+
 ```python
-from LlmPhishingDetector import LlmPhishingDetector
+from llm_phishing_detector import LlmPhishingDetector
 
 # initialize detector
 detector = LlmPhishingDetector()
@@ -25,7 +26,7 @@ pip install -r ./requirements.txt
 ```
 Run the program:
 ```shell
-python llm_phishing_detector.py
+python phishing_detector.py
 ```
 
 ## Running locally with pipenv
@@ -39,7 +40,7 @@ pipenv install
 ```
 Run the program:
 ```shell
-python llm_phishing_detector.py
+python phishing_detector.py
 ```
 
 ## Evaluating the model

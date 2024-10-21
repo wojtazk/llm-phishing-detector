@@ -1,5 +1,5 @@
 from helpers import load_evaluation_data
-from LlmPhishingDetector import LlmPhishingDetector
+from llm_phishing_detector import LlmPhishingDetector
 
 # get data from files
 message_bodies, labels = load_evaluation_data()
@@ -29,5 +29,3 @@ total_messages = len(message_bodies)
 print(f'Total number of messages: {total_messages}')
 print(f'Number of phishing messages: {labels.count(1)}')
 print(f'Model prediction accuracy: {(num_correct_labels / total_messages) * 100:.5f}%')
-
-
