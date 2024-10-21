@@ -32,7 +32,7 @@ python phishing_detector.py
 Type the content to be checked for phishing.\
 Type `<<EOF` as the last line to signal the end of input.
 
-Get label and prediction from the model.
+Get prediction from the model.
 
 ![image](https://github.com/user-attachments/assets/27557da8-6bf6-4c03-81a3-26826db36982)
 
