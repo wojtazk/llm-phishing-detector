@@ -12,17 +12,17 @@ class OutputColors:
     GREY = '\33[90m'
 
 
-def load_evaluation_data() -> (str, int):
+def load_evaluation_data() -> tuple[list[str], list[int]]:
     # increase the csv max field size limit
     csv.field_size_limit(sys.maxsize)
 
-    eval_data_dir = 'evaluation_data'
+    eval_data_dir = 'evaluation_data'  # directory to load .csv files from
 
     # increase the csv max field size limit
     csv.field_size_limit(sys.maxsize)
 
-    message_bodies: [str] = []
-    labels: [int] = []
+    message_bodies: list[str] = []
+    labels: list[int] = []
 
     # get all files in eval_data_dir
     evaluation_files = os.listdir(eval_data_dir)
