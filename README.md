@@ -30,6 +30,9 @@ python phishing_detector.py
 ```
 
 ## Running locally with pipenv
+> [!NOTE]
+> It doesn't really work on Windows, due to issues with installing PyTorch
+
 Get into pipenv environment:
 ```shell
 pipenv shell
