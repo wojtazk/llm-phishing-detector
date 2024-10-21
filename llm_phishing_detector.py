@@ -1,9 +1,12 @@
 import torch
 from transformers import BertTokenizer, BertForSequenceClassification
-from helpers import OutputColors
 
 
 class LlmPhishingDetector:
+    """
+    Class for detecting phishing attempts based on ealvaradob/bert-finetuned-phishing LLM
+    """
+
     # specify model path
     model_path = 'ealvaradob/bert-finetuned-phishing'
 
@@ -14,17 +17,30 @@ class LlmPhishingDetector:
 
     @classmethod
     def print_device_info(cls) -> None:
+        """
+        Prints information about the device, the model will be running on (CUDA or CPU)
+        """
+
         if cls.cuda_available:
-            print(f'{OutputColors.GREY}'
+            grey_color = '\33[90m'
+            reset_color = '\033[0m'
+
+            print(f'{grey_color}'
                   f'CUDA device available: {cls.cuda_available}')
             print(f'CUDA devices available: {torch.cuda.device_count()} ')
             print(f'CUDA current device: {torch.cuda.current_device()}')
             print(f'Running on: {torch.cuda.get_device_name(torch.cuda.current_device())}'
-                  f'{OutputColors.RESET}')
+                  f'{reset_color}')
         else:
             print(f'Running on CPU')
 
     def __init__(self):
+        """
+        Initializes the LlmPhishingDetector
+
+        Loads the model and tokenizer, moves the model to the CUDA device if available
+        """
+
         # initialize tokenizer and model
         self.tokenizer = BertTokenizer.from_pretrained(self.model_path)
         self.model = BertForSequenceClassification.from_pretrained(self.model_path)
@@ -32,9 +48,18 @@ class LlmPhishingDetector:
         # move model to gpu if it is available
         self.model.to(self.device)
 
-    def detect_phishing(self, message) -> (int, float):
+    def detect_phishing(self, content: str) -> tuple[int, float]:
+        """
+        Get model prediction for the provided text
+
+        :param content: potential phishing message, URL or HTML code
+        :type content: str
+
+        :return: A tuple containing the label (0 - normal, 1 - phishing) and the probability of content being phishing
+        :rtype: tuple[int, float]
+        """
         # tokenize the input
-        tokenized_input = self.tokenizer(message, return_tensors='pt', truncation=True, padding=True).to(self.device)
+        tokenized_input = self.tokenizer(content, return_tensors='pt', truncation=True, padding=True).to(self.device)
 
         # get model output
         with torch.no_grad():  # don't calculate gradient for the output
