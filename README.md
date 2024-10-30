@@ -5,7 +5,8 @@ model used: [ealvaradob/bert-finetuned-phishing](https://huggingface.co/ealvarad
 model license: `Apache license 2.0`
 
 ## LlmPhishingDetector class usage example
-
+> [!NOTE]
+> Only the [`llm_phishing_detector.py`](/llm_phishing_detector.py) is required to use the class
 ```python
 from llm_phishing_detector import LlmPhishingDetector
 
@@ -73,7 +74,7 @@ python model_evaluate.py
     >A. I. Champa, M. F. Rabbi, and M. F. Zibran, “Curated datasets and feature analysis for phishing email detection with machine learning,” in 3rd IEEE International Conference on Computing and Machine Intelligence (ICMI), 2024, pp. 1–7 (to appear).
 
 ### Evaluation Score
-On `Phishing Email Curated Database` the model labeled `92.34%` messages correctly.\
+On `Phishing Email Curated Database` the model labeled `~92.34%` messages correctly.\
 \
 ![evaluation score screenshot](https://github.com/user-attachments/assets/e263503b-5cbf-4c1e-a643-acc69539b850)
 
