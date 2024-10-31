@@ -65,8 +65,6 @@ python model_evaluate.py
 ```
 
 ### Data used for evaluation
-<!-- - Non-phishing emails - [Enron Email Dataset](https://www.cs.cmu.edu/~enron/)
-    - https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz -->
 - [Phishing Email Curated Datasets](https://figshare.com/articles/dataset/Phishing_Email_Curated_Datasets/24899943)\
 \
     `license`: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
